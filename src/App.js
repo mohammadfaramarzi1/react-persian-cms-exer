@@ -1,7 +1,10 @@
 import React from 'react'
+import Sidebar from './components/Sidebar/Sidebar'
 
 export default function App() {
   return (
-    <h1>SabzLearn</h1>
+    <div>
+      <Sidebar />
+    </div>
   )
 }
