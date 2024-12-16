@@ -5,7 +5,7 @@ function Sidebar() {
     <div className="sidebar">
         <h1 className="sidebar-title">به داشبورد خود خوش آمدید</h1>
         <ul className="sidebar-links">
-            <li>
+            <li className="active">
                 <a href="#">صفحه اصلی</a>
             </li>
             <li>
