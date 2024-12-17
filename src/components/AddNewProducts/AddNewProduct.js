@@ -28,6 +28,7 @@ function AddNewProduct() {
                     <input type="text" placeholder="تعداد رنگ بندی محصول" className="add-products-input" />
                 </div>
             </div>
+            <button className="add-products-btn">ثبت محصول</button>
         </form>
     </div>
   )
