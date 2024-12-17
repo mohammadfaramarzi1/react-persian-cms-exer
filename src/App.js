@@ -1,10 +1,15 @@
-import React from 'react'
 import Sidebar from './components/Sidebar/Sidebar'
+import Header from './components/Header/Header'
+
+import "./App.css"
 
 export default function App() {
   return (
-    <div>
+    <>
       <Sidebar />
-    </div>
+      <div className="main">
+        <Header />
+      </div>
+    </>
   )
 }
