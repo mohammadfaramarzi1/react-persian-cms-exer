@@ -15,8 +15,8 @@ function Sidebar() {
       <h1 className="sidebar-title">به داشبورد خود خوش آمدید</h1>
       <ul className="sidebar-links">
         <li className="active">
-          <Link>
-            <AiOutlineHome to="/products"/>
+          <Link to="/products">
+            <AiOutlineHome to="/products" />
             صفحه اصلی
           </Link>
         </li>

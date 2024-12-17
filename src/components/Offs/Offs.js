@@ -1,5 +1,5 @@
 import React from "react";
-import Errorbox from "../components/Errorbox/Errorbox";
+import Errorbox from "../Errorbox/Errorbox";
 
 function Offs() {
   return (
