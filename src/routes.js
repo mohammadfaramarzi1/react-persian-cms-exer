@@ -2,7 +2,7 @@ import Products from "./components/Products/Products";
 import Comments from "./components/Comments/Comments";
 import Users from "./components/Users/Users";
 import Orders from "./components/Orders/Orders";
-import Offs from "./components/Offs/Offs";
+import Offs from "./Offs/Offs";
 
 const routes = [
   {

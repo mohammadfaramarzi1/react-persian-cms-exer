@@ -1,8 +1,11 @@
 import React from 'react'
+import Errorbox from '../Errorbox/Errorbox'
 
 function Comments() {
   return (
-    <div>Comments</div>
+    <div>
+      <Errorbox msg="هیچ کامنتی یافت نشد..." />
+    </div>
   )
 }
 
