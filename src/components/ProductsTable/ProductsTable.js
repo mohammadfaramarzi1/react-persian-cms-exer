@@ -9,7 +9,7 @@ function ProductsTable() {
             <th>قیمت</th>
             <th>موجودی</th>
         </tr>
-        <tr>
+        <tr className="products-table-body-tr">
             <td>
                 <img src="/images/oil.jpeg" alt="product cover" className="products-table-img" />
             </td>
