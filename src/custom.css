@@ -55,3 +55,22 @@ a {
   opacity: 1;
   visibility: visible;
 }
+
+.cms-table {
+  margin-top: 20px;
+  width: 100%;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  background-color: var(--white);
+}
+
+.cms-table tr {
+  text-align: center;
+}
+
+.cms-table th, .cms-table td {
+  padding: 20px;
+}

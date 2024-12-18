@@ -3,6 +3,7 @@ import { useState } from "react";
 import DeleteModal from "../DeleteModal/DeleteModal";
 
 import "./ProductsTable.css";
+import DetailsModal from "../DetailsModal/DetailsModal";
 
 function ProductsTable() {
   const [isShowModal, setIsShowModal] = useState(false);
@@ -57,6 +58,7 @@ function ProductsTable() {
           deleteModalSubmitAction={deleteModalSubmitAction}
         />
       )}
+      <DetailsModal />
     </>
   );
 }

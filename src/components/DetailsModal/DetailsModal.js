@@ -1,24 +1,28 @@
 import "./DetailsModal.css";
 
 function DetailsModal() {
-  return <div className="details-modal modal-parent active">
-    <table className="cms-table">
-        <thead>
+  return (
+    <div className="modal-parent active">
+      <div className="details-modal">
+        <table className="cms-table">
+          <thead>
             <tr>
-                <th>نام</th>
-                <th>قیمت</th>
-                <th>محبوبیت</th>
+              <th>نام</th>
+              <th>قیمت</th>
+              <th>محبوبیت</th>
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
             <tr>
-                <td>لپتاپ</td>
-                <td>12000000</td>
-                <td>91%</td>
+              <td>لپتاپ</td>
+              <td>12000000</td>
+              <td>91%</td>
             </tr>
-        </tbody>
-    </table>
-  </div>;
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 }
 
 export default DetailsModal;
