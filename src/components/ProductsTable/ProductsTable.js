@@ -53,7 +53,6 @@ function ProductsTable() {
       </table>
       {isShowModal && (
         <DeleteModal
-          isShowModal={isShowModal}
           deleteModalCancelAction={deleteModalCancelAction}
           deleteModalSubmitAction={deleteModalSubmitAction}
         />
