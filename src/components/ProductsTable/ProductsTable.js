@@ -6,15 +6,21 @@ import "./ProductsTable.css";
 import DetailsModal from "../DetailsModal/DetailsModal";
 
 function ProductsTable() {
-  const [isShowModal, setIsShowModal] = useState(false);
+  const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
+  const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
 
   const deleteModalCancelAction = () => {
-    setIsShowModal(false);
+    setIsShowDeleteModal(false);
   };
 
   const deleteModalSubmitAction = () => {
-    setIsShowModal(false);
+    setIsShowDeleteModal(false);
   };
+
+  const closeDetailsModal = () => {
+    setIsShowDetailsModal(false)
+  }
+
 
   return (
     <>
@@ -40,10 +46,15 @@ function ProductsTable() {
             <td>92000 تومان</td>
             <td>82</td>
             <td>
-              <button className="products-table-btn">جزییات</button>
               <button
                 className="products-table-btn"
-                onClick={() => setIsShowModal(true)}
+                onClick={() => setIsShowDetailsModal(true)}
+              >
+                جزییات
+              </button>
+              <button
+                className="products-table-btn"
+                onClick={() => setIsShowDeleteModal(true)}
               >
                 حذف
               </button>
@@ -52,13 +63,13 @@ function ProductsTable() {
           </tr>
         </tbody>
       </table>
-      {isShowModal && (
+      {isShowDeleteModal && (
         <DeleteModal
           deleteModalCancelAction={deleteModalCancelAction}
           deleteModalSubmitAction={deleteModalSubmitAction}
         />
       )}
-      <DetailsModal />
+      {isShowDetailsModal && <DetailsModal closeDetailsModal={closeDetailsModal} />}
     </>
   );
 }
