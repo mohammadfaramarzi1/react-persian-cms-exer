@@ -61,3 +61,26 @@
 
 /* Edit Children Styles */
 
+.edit-products-form-group {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    width: 100%;
+    background-color: #f4f4f4;
+    padding: 0 20px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.edit-product-input {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    font-size: 1.1rem;
+    width: 100%;
+    padding: 8px 10px;
+}
