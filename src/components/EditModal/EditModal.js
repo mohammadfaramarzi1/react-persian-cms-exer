@@ -22,7 +22,9 @@ function EditModal({ children, onClose, onSubmit }) {
       <form className="edit-modal-form">
         <h1>اطلاعات جدید را وارد نمایید</h1>
         {children}
-        <button className="edit-form-submit">ثبت اطلاعات جدید</button>
+        <button className="edit-form-submit" onClick={onSubmit}>
+          ثبت اطلاعات جدید
+        </button>
       </form>
     </div>,
     document.querySelector("#modals-parent")
