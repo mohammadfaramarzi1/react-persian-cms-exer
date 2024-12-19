@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineDollarCircle } from "react-icons/ai";
 
 import DeleteModal from "../DeleteModal/DeleteModal";
 import DetailsModal from "../DetailsModal/DetailsModal";
 import EditModal from "../EditModal/EditModal";
+import Errorbox from "../Errorbox/Errorbox";
 
 import "./ProductsTable.css";
 
@@ -11,6 +12,14 @@ function ProductsTable() {
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
   const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
   const [isShowEditModal, setIsShowEditModal] = useState(false);
+  const [products, setProducts] = useState([]);
+  console.log(products);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/products/")
+      .then((res) => res.json())
+      .then((products) => setProducts(products));
+  }, []);
 
   const deleteModalCancelAction = () => {
     setIsShowDeleteModal(false);
@@ -30,6 +39,8 @@ function ProductsTable() {
     setIsShowEditModal(false);
   };
 
+  if (!products.length) return <Errorbox msg="هیچ محصولی یافت نشد..." />;
+
   return (
     <>
       <table className="products-table">
@@ -42,38 +53,40 @@ function ProductsTable() {
           </tr>
         </thead>
         <tbody>
-          <tr className="products-table-body-tr">
-            <td>
-              <img
-                src="/images/oil.jpeg"
-                alt="product cover"
-                className="products-table-img"
-              />
-            </td>
-            <td>روغن سرخ کردنی</td>
-            <td>92000 تومان</td>
-            <td>82</td>
-            <td>
-              <button
-                className="products-table-btn"
-                onClick={() => setIsShowDetailsModal(true)}
-              >
-                جزییات
-              </button>
-              <button
-                className="products-table-btn"
-                onClick={() => setIsShowDeleteModal(true)}
-              >
-                حذف
-              </button>
-              <button
-                className="products-table-btn"
-                onClick={() => setIsShowEditModal(true)}
-              >
-                ویرایش
-              </button>
-            </td>
-          </tr>
+          {products.map((product) => (
+            <tr className="products-table-body-tr" key={product.id}>
+              <td>
+                <img
+                  src={product.img}
+                  alt="product cover"
+                  className="products-table-img"
+                />
+              </td>
+              <td>{product.title}</td>
+              <td>{product.price.toLocaleString()} تومان</td>
+              <td>{product.count}</td>
+              <td>
+                <button
+                  className="products-table-btn"
+                  onClick={() => setIsShowDetailsModal(true)}
+                >
+                  جزییات
+                </button>
+                <button
+                  className="products-table-btn"
+                  onClick={() => setIsShowDeleteModal(true)}
+                >
+                  حذف
+                </button>
+                <button
+                  className="products-table-btn"
+                  onClick={() => setIsShowEditModal(true)}
+                >
+                  ویرایش
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
       {isShowDeleteModal && (
