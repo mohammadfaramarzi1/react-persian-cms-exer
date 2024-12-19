@@ -1,3 +1,4 @@
+import ReactDOM from "react-dom"
 import { useEffect } from "react";
 
 import "./DetailsModal.css";
@@ -15,7 +16,7 @@ function DetailsModal({ closeDetailsModal }) {
       window.removeEventListener("keydown", checkKey);
     };
   }, []);
-  return (
+  return ReactDOM.createPortal(
     <div className="modal-parent active">
       <div className="details-modal">
         <table className="cms-table">
@@ -35,7 +36,8 @@ function DetailsModal({ closeDetailsModal }) {
           </tbody>
         </table>
       </div>
-    </div>
+    </div>,
+    document.querySelector("#modals-parent")
   );
 }
 
