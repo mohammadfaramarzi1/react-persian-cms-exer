@@ -7,7 +7,7 @@ function Header() {
   return (
     <div className="header">
       <div className="admin-profile">
-        <img src="/images/saeedi.jpeg" alt="admin" />
+        <img src="/img/saeedi.jpeg" alt="admin" />
         <div>
           <h1>محمد امین سعیدی راد</h1>
           <h3>برنامه نویس فرانت اند</h3>

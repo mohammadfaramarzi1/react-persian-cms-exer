@@ -13,20 +13,32 @@ function ProductsTable() {
   const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
   const [isShowEditModal, setIsShowEditModal] = useState(false);
   const [products, setProducts] = useState([]);
+  const [productID, setProductsID] = useState(null);
   console.log(products);
 
   useEffect(() => {
+    getAllProducts();
+  }, []);
+
+  const getAllProducts = () => {
     fetch("http://localhost:8000/api/products/")
       .then((res) => res.json())
       .then((products) => setProducts(products));
-  }, []);
+  };
 
   const deleteModalCancelAction = () => {
     setIsShowDeleteModal(false);
   };
 
   const deleteModalSubmitAction = () => {
-    setIsShowDeleteModal(false);
+    fetch(`http://localhost:8000/api/products/${productID}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setIsShowDeleteModal(false);
+        getAllProducts();
+      });
   };
 
   const closeDetailsModal = () => {
@@ -74,7 +86,10 @@ function ProductsTable() {
                 </button>
                 <button
                   className="products-table-btn"
-                  onClick={() => setIsShowDeleteModal(true)}
+                  onClick={() => {
+                    setIsShowDeleteModal(true);
+                    setProductsID(product.id);
+                  }}
                 >
                   حذف
                 </button>
