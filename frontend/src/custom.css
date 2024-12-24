@@ -56,6 +56,16 @@ a {
   visibility: visible;
 }
 
+.cms-main {
+  margin-top: 60px;
+  padding: 20px;
+  border-radius: 25px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  -ms-border-radius: 25px;
+  -o-border-radius: 25px;
+}
+
 .cms-table {
   margin-top: 20px;
   width: 100%;
