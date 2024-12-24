@@ -9,11 +9,10 @@ import Errorbox from "../Errorbox/Errorbox";
 
 import "./ProductsTable.css";
 
-function ProductsTable() {
+function ProductsTable({ allProducts, getAllProducts }) {
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
   const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
   const [isShowEditModal, setIsShowEditModal] = useState(false);
-  const [allProducts, setAllProducts] = useState([]);
   const [productID, setProductID] = useState(null);
   const [mainProduct, setMainProduct] = useState(null);
   const [editedProduct, setEditedProduct] = useState({
@@ -27,16 +26,6 @@ function ProductsTable() {
   });
 
   console.log(editedProduct);
-
-  useEffect(() => {
-    getAllProducts();
-  }, []);
-
-  const getAllProducts = () => {
-    fetch("http://localhost:8000/api/products/")
-      .then((res) => res.json())
-      .then((products) => setAllProducts(products));
-  };
 
   const deleteModalCancelAction = () => {
     console.log("مدال کنسل شد");
@@ -115,8 +104,7 @@ function ProductsTable() {
 
   return (
     <>
-      <ToastContainer />
-      {allProducts.length ? (
+      {allProducts.reverse().length ? (
         <table className="products-table">
           <thead>
             <tr className="products-table-heading-tr">

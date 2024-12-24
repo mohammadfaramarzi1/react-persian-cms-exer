@@ -1,12 +1,13 @@
 import { useState } from "react";
 
 import "./AddNewProduct.css";
+import { toast } from "react-toastify";
 
-function AddNewProduct() {
+function AddNewProduct({ getAllProducts }) {
   const [form, setForm] = useState({
     title: "",
     price: "",
-    count: 0,
+    count: "",
     img: "",
     popularity: "",
     sale: "",
@@ -38,8 +39,34 @@ function AddNewProduct() {
       body: JSON.stringify(newProductInfos),
     })
       .then((res) => res.json())
-      .then((result) => console.log(result));
+      .then((result) => {
+        getAllProducts();
+        emptyInputs();
+        toast("محصول مورد نظر با موفقیت ایجاد شد", {
+          type: "success",
+          position: "top-right",
+        });
+      })
+      .catch((err) => {
+        emptyInputs();
+        toast("محصول مورد نظر با موفقیت ایجاد نشد", {
+          type: "error",
+          position: "top-right",
+        });
+      });
   };
+
+  function emptyInputs() {
+    setForm({
+      title: "",
+      price: "",
+      count: "",
+      img: "",
+      popularity: "",
+      sale: "",
+      colors: "",
+    });
+  }
 
   return (
     <div className="products-main">
