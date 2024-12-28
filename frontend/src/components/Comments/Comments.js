@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 import DetailsModal from "../DetailsModal/DetailsModal";
 import DeleteModal from "../DeleteModal/DeleteModal";
+import EditModal from "../EditModal/EditModal";
 import Errorbox from "../Errorbox/Errorbox";
 
 import "./Comments.css";
@@ -11,10 +12,9 @@ function Comments() {
   const [allComments, setAllComments] = useState([]);
   const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
+  const [isShowEditModal, setIsShowEditModal] = useState(false);
   const [commentBody, setCommnetBody] = useState("");
   const [commentID, setCommentID] = useState("");
-
-  console.log(commentID);
 
   useEffect(() => {
     getAllComments();
@@ -30,6 +30,41 @@ function Comments() {
 
   const closeDetailsModal = () => {
     setIsShowDetailsModal(false);
+  };
+
+  const closeEditModal = () => {
+    setIsShowEditModal(false);
+  };
+
+  const updateComment = (event) => {
+    event.preventDefault();
+    console.log("update");
+    fetch(`http://localhost:8000/api/comments/${commentID}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        body: commentBody,
+      }),
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        getAllComments();
+        setIsShowEditModal(false);
+        toast("کامنت مورد نظر با موفقیت ویرایش شد", {
+          type: "success",
+          position: "top-right",
+        });
+      })
+      .catch((err) => {
+        setIsShowDeleteModal(false);
+        toast("کامنت مورد نظر با موفقیت ویرایش نشد", {
+          type: "error",
+          position: "top-right",
+        });
+      });
   };
 
   const deleteModalCancelAction = () => {
@@ -101,7 +136,15 @@ function Comments() {
                   >
                     حذف
                   </button>
-                  <button>ویرایش</button>
+                  <button
+                    onClick={() => {
+                      setIsShowEditModal(true);
+                      setCommnetBody(comment.body);
+                      setCommentID(comment.id);
+                    }}
+                  >
+                    ویرایش
+                  </button>
                   <button>پاسخ</button>
                   <button>تایید</button>
                 </td>
@@ -125,6 +168,14 @@ function Comments() {
           deleteModalCancelAction={deleteModalCancelAction}
           deleteModalSubmitAction={deleteModalSubmitAction}
         />
+      )}
+      {isShowEditModal && (
+        <EditModal onClose={closeEditModal} onSubmit={updateComment}>
+          <textarea
+            value={commentBody}
+            onChange={(event) => setCommnetBody(event.target.value)}
+          />
+        </EditModal>
       )}
       <ToastContainer />
     </div>
