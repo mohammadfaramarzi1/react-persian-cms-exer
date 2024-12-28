@@ -174,6 +174,7 @@ function Comments() {
           <textarea
             value={commentBody}
             onChange={(event) => setCommnetBody(event.target.value)}
+            style={{ width: "100%", marginTop: "20px" }}
           />
         </EditModal>
       )}
