@@ -36,6 +36,9 @@ function ProductsTable({ allProducts, getAllProducts }) {
     console.log("مدال تایید شد");
     fetch(`http://localhost:8000/api/products/${productID}`, {
       method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
     })
       .then((res) => res.json())
       .then((result) => {

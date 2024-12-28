@@ -1,25 +1,65 @@
 import { useState, useEffect } from "react";
 
 import DetailsModal from "../DetailsModal/DetailsModal";
+import DeleteModal from "../DeleteModal/DeleteModal";
 import Errorbox from "../Errorbox/Errorbox";
 
 import "./Comments.css";
+import { toast, ToastContainer } from "react-toastify";
 
 function Comments() {
   const [allComments, setAllComments] = useState([]);
   const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
+  const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
   const [commentBody, setCommnetBody] = useState("");
+  const [commentID, setCommentID] = useState("");
+
+  console.log(commentID);
 
   useEffect(() => {
+    getAllComments();
+  }, []);
+
+  function getAllComments() {
     fetch("http://localhost:8000/api/comments/")
       .then((res) => res.json())
       .then((comments) => {
         setAllComments(comments);
       });
-  }, []);
+  }
 
   const closeDetailsModal = () => {
     setIsShowDetailsModal(false);
+  };
+
+  const deleteModalCancelAction = () => {
+    setIsShowDeleteModal(false);
+  };
+
+  const deleteModalSubmitAction = () => {
+    fetch(`http://localhost:8000/api/comments/${commentID}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        setIsShowDeleteModal(false);
+        getAllComments();
+        toast("کامنت مورد نظر با موفقیت حذف شد", {
+          type: "success",
+          position: "top-right",
+        });
+      })
+      .catch((err) => {
+        setIsShowDeleteModal(false);
+        toast("کامنت مورد نظر با موفقیت حذف نشد", {
+          type: "error",
+          position: "top-right",
+        });
+      });
   };
 
   return (
@@ -53,7 +93,14 @@ function Comments() {
                 <td>{comment.date}</td>
                 <td>{comment.hour}</td>
                 <td>
-                  <button>حذف</button>
+                  <button
+                    onClick={() => {
+                      setIsShowDeleteModal(true);
+                      setCommentID(comment.id);
+                    }}
+                  >
+                    حذف
+                  </button>
                   <button>ویرایش</button>
                   <button>پاسخ</button>
                   <button>تایید</button>
@@ -73,6 +120,13 @@ function Comments() {
           </button>
         </DetailsModal>
       )}
+      {isShowDeleteModal && (
+        <DeleteModal
+          deleteModalCancelAction={deleteModalCancelAction}
+          deleteModalSubmitAction={deleteModalSubmitAction}
+        />
+      )}
+      <ToastContainer />
     </div>
   );
 }
