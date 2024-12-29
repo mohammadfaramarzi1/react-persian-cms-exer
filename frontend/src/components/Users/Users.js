@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 
+import DeleteModal from "../DeleteModal/DeleteModal";
+
 import Errorbox from "../Errorbox/Errorbox";
+import { toast, ToastContainer } from "react-toastify";
 
 function Users() {
   const [users, setUsers] = useState([]);
+  const [userID, setUserID] = useState("");
+  const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
 
   useEffect(() => {
     getAllUsers();
@@ -15,6 +20,33 @@ function Users() {
     fetch("http://localhost:8000/api/users")
       .then((res) => res.json())
       .then((users) => setUsers(users));
+  };
+
+  const deleteModalCancelAction = () => {
+    setIsShowDeleteModal(false);
+  };
+
+  const removeUser = (event) => {
+    event.preventDefault();
+    fetch(`http://localhost:8000/api/users/${userID}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setIsShowDeleteModal(false);
+        getAllUsers();
+        toast("کاربر مورد نظر با موفقیت حذف شد", {
+          position: "top-right",
+          type: "success",
+        });
+      })
+      .catch((err) => {
+        setIsShowDeleteModal(false);
+        toast("کاربر مورد نظر با موفقیت حذف نشد", {
+          position: "top-right",
+          type: "error",
+        });
+      });
   };
 
   return (
@@ -43,9 +75,16 @@ function Users() {
                   <td>0{user.phone}</td>
                   <td>{user.email}</td>
                   <td>
-                      <button>حذف</button>
-                      <button>جزییات</button>
-                      <button>ویرایش</button>
+                    <button
+                      onClick={() => {
+                        setIsShowDeleteModal(true);
+                        setUserID(user.id);
+                      }}
+                    >
+                      حذف
+                    </button>
+                    <button>جزییات</button>
+                    <button>ویرایش</button>
                   </td>
                 </tr>
               ))}
@@ -55,6 +94,14 @@ function Users() {
       ) : (
         <Errorbox msg="هیچ کاربری یافت نشد..." />
       )}
+      {isShowDeleteModal && (
+        <DeleteModal
+          title="آیا از حذف کاربر اطمینان دارید؟"
+          deleteModalCancelAction={deleteModalCancelAction}
+          deleteModalSubmitAction={removeUser}
+        />
+      )}
+      <ToastContainer />
     </>
   );
 }
