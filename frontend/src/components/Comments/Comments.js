@@ -14,6 +14,7 @@ function Comments() {
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
   const [isShowEditModal, setIsShowEditModal] = useState(false);
   const [isShowAcceptModal, setIsShowAcceptModal] = useState(false);
+  const [isShowRejectModal, setIsShowRejectModal] = useState(false);
   const [commentBody, setCommnetBody] = useState("");
   const [commentID, setCommentID] = useState("");
 
@@ -76,6 +77,34 @@ function Comments() {
     setIsShowAcceptModal(false);
   };
 
+  const rejectModalCancelAction = () => {
+    setIsShowRejectModal(false);
+  };
+
+  const rejectModalSubmitAction = (event) => {
+    event.preventDefault();
+    fetch(`http://localhost:8000/api/comments/reject/${commentID}`, {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setIsShowAcceptModal(false);
+        getAllComments();
+        toast("کامنت مورد نظر با موفقیت تایید شد", {
+          type: "success",
+          position: "top-right",
+        });
+      })
+      .catch((err) => {
+        setIsShowDeleteModal(false);
+        toast("کامنت مورد نظر با موفقیت تایید نشد", {
+          type: "error",
+          position: "top-right",
+        });
+      });
+    setIsShowRejectModal(false);
+  };
+
   const acceptModalSubmitAction = (event) => {
     event.preventDefault();
     fetch(`http://localhost:8000/api/comments/accept/${commentID}`, {
@@ -84,7 +113,7 @@ function Comments() {
       .then((res) => res.json())
       .then((result) => {
         setIsShowAcceptModal(false);
-        // getAllComments();
+        getAllComments();
         toast("کامنت مورد نظر با موفقیت تایید شد", {
           type: "success",
           position: "top-right",
@@ -176,7 +205,14 @@ function Comments() {
                   </button>
                   <button>پاسخ</button>
                   {!!comment.isAccept ? (
-                    ""
+                    <button
+                      onClick={() => {
+                        setIsShowRejectModal(true);
+                        setCommentID(comment.id);
+                      }}
+                    >
+                      رد
+                    </button>
                   ) : (
                     <button
                       onClick={() => {
@@ -224,6 +260,13 @@ function Comments() {
           title="آیا از تایید کامنت اطمینان دارید؟"
           deleteModalSubmitAction={acceptModalSubmitAction}
           deleteModalCancelAction={acceptModalCancelAction}
+        />
+      )}
+      {isShowRejectModal && (
+        <DeleteModal
+          title="آیا از رد کامنت اطمینان دارید؟"
+          deleteModalCancelAction={rejectModalCancelAction}
+          deleteModalSubmitAction={rejectModalSubmitAction}
         />
       )}
       <ToastContainer />
