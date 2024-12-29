@@ -66,6 +66,11 @@ a {
   -o-border-radius: 25px;
 }
 
+.cms-title {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
 .cms-table {
   margin-top: 20px;
   width: 100%;
