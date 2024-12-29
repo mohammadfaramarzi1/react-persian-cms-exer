@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AiOutlineDollarCircle } from "react-icons/ai";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import DeleteModal from "../DeleteModal/DeleteModal";
 import DetailsModal from "../DetailsModal/DetailsModal";
@@ -181,6 +181,7 @@ function ProductsTable({ allProducts, getAllProducts }) {
         <DeleteModal
           deleteModalSubmitAction={deleteModalSubmitAction}
           deleteModalCancelAction={deleteModalCancelAction}
+          title="آیا از حذف محصول اطمینان دارید؟"
         />
       )}
       {isShowDetailsModal && (

@@ -13,6 +13,7 @@ function Comments() {
   const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
   const [isShowEditModal, setIsShowEditModal] = useState(false);
+  const [isShowAcceptModal, setIsShowAcceptModal] = useState(false);
   const [commentBody, setCommnetBody] = useState("");
   const [commentID, setCommentID] = useState("");
 
@@ -69,6 +70,34 @@ function Comments() {
 
   const deleteModalCancelAction = () => {
     setIsShowDeleteModal(false);
+  };
+
+  const acceptModalCancelAction = () => {
+    setIsShowAcceptModal(false);
+  };
+
+  const acceptModalSubmitAction = (event) => {
+    event.preventDefault();
+    fetch(`http://localhost:8000/api/comments/accept/${commentID}`, {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setIsShowAcceptModal(false);
+        // getAllComments();
+        toast("کامنت مورد نظر با موفقیت تایید شد", {
+          type: "success",
+          position: "top-right",
+        });
+      })
+      .catch((err) => {
+        setIsShowDeleteModal(false);
+        toast("کامنت مورد نظر با موفقیت تایید نشد", {
+          type: "error",
+          position: "top-right",
+        });
+      });
+    setIsShowAcceptModal(false);
   };
 
   const deleteModalSubmitAction = () => {
@@ -146,7 +175,18 @@ function Comments() {
                     ویرایش
                   </button>
                   <button>پاسخ</button>
-                  <button>تایید</button>
+                  {!!comment.isAccept ? (
+                    ""
+                  ) : (
+                    <button
+                      onClick={() => {
+                        setIsShowAcceptModal(true);
+                        setCommentID(comment.id);
+                      }}
+                    >
+                      تایید
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
@@ -167,6 +207,7 @@ function Comments() {
         <DeleteModal
           deleteModalCancelAction={deleteModalCancelAction}
           deleteModalSubmitAction={deleteModalSubmitAction}
+          title="آیا از حذف کامنت اطمینان دارید؟"
         />
       )}
       {isShowEditModal && (
@@ -177,6 +218,13 @@ function Comments() {
             style={{ width: "100%", marginTop: "20px" }}
           />
         </EditModal>
+      )}
+      {isShowAcceptModal && (
+        <DeleteModal
+          title="آیا از تایید کامنت اطمینان دارید؟"
+          deleteModalSubmitAction={acceptModalSubmitAction}
+          deleteModalCancelAction={acceptModalCancelAction}
+        />
       )}
       <ToastContainer />
     </div>
