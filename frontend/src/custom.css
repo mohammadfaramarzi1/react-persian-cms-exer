@@ -49,6 +49,7 @@ a {
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   -o-transform: translate(-50%, -50%);
+  overflow-y: scroll;
 }
 
 .modal-parent.active {
