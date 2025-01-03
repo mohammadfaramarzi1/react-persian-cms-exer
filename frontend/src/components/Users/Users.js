@@ -4,6 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import Errorbox from "../Errorbox/Errorbox";
 import EditModal from "../EditModal/EditModal";
+import DetailsModal from "../DetailsModal/DetailsModal";
 
 import "./Users.css";
 import { AiOutlineDollarCircle } from "react-icons/ai";
@@ -11,8 +12,10 @@ import { AiOutlineDollarCircle } from "react-icons/ai";
 function Users() {
   const [users, setUsers] = useState([]);
   const [userID, setUserID] = useState("");
+  const [mainUser, setMainUser] = useState(null);
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
   const [isShowEditModal, setIsShowEditModal] = useState(false);
+  const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
   const [form, setForm] = useState({
     firsname: "",
     lastname: "",
@@ -107,6 +110,10 @@ function Users() {
       });
   };
 
+  const closeDetailsModal = () => {
+    setIsShowDetailsModal(false);
+  };
+
   const changeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value.trim();
@@ -147,7 +154,14 @@ function Users() {
                     >
                       حذف
                     </button>
-                    <button>جزییات</button>
+                    <button
+                      onClick={() => {
+                        setIsShowDetailsModal(true);
+                        setMainUser(user);
+                      }}
+                    >
+                      جزییات
+                    </button>
                     <button
                       onClick={() => {
                         setIsShowEditModal(true);
@@ -306,6 +320,28 @@ function Users() {
             />
           </div>
         </EditModal>
+      )}
+      {isShowDetailsModal && (
+        <DetailsModal closeDetailsModal={closeDetailsModal}>
+          <table className="cms-table">
+            <thead>
+              <tr>
+                <th>شهر</th>
+                <th>آدرس</th>
+                <th>امتیاز</th>
+                <th>میزان خرید</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{mainUser.city}</td>
+                <td>{mainUser.address}</td>
+                <td>{mainUser.score}</td>
+                <td>{mainUser.buy.toLocaleString()}</td>
+              </tr>
+            </tbody>
+          </table>
+        </DetailsModal>
       )}
       <ToastContainer />
     </>
