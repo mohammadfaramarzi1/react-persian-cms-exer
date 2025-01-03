@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import { AiOutlineHome } from "react-icons/ai";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
@@ -14,42 +14,30 @@ function Sidebar() {
     <div className="sidebar">
       <h1 className="sidebar-title">به داشبورد خود خوش آمدید</h1>
       <ul className="sidebar-links">
-        <li className="active">
-          <Link to="/products">
-            <AiOutlineHome to="/products" />
-            صفحه اصلی
-          </Link>
-        </li>
-        <li>
-          <Link to="/products">
-            <MdOutlineProductionQuantityLimits />
-            محصولات
-          </Link>
-        </li>
-        <li>
-          <Link to="/comments">
-            <MdOutlineInsertComment />
-            کامنت ها
-          </Link>
-        </li>
-        <li>
-          <Link to="/users">
-            <FiUsers />
-            کاربران
-          </Link>
-        </li>
-        <li>
-          <Link to="/orders">
-            <MdOutlineShoppingBag />
-            سفارشات
-          </Link>
-        </li>
-        <li>
-          <Link to="/offs">
-            <BsCurrencyDollar />
-            تخفیف ها
-          </Link>
-        </li>
+        <NavLink to="/">
+          <AiOutlineHome to="/products" />
+          صفحه اصلی
+        </NavLink>
+        <NavLink to="/products">
+          <MdOutlineProductionQuantityLimits />
+          محصولات
+        </NavLink>
+        <NavLink to="/comments">
+          <MdOutlineInsertComment />
+          کامنت ها
+        </NavLink>
+        <NavLink to="/users">
+          <FiUsers />
+          کاربران
+        </NavLink>
+        <NavLink to="/orders">
+          <MdOutlineShoppingBag />
+          سفارشات
+        </NavLink>
+        <NavLink to="/offs">
+          <BsCurrencyDollar />
+          تخفیف ها
+        </NavLink>
       </ul>
     </div>
   );

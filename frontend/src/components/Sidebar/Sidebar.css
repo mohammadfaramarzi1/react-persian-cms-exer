@@ -18,12 +18,12 @@
 }
 
 
-.sidebar-links li {
+.sidebar-links a {
     position: relative;
     padding: 15px;
 }
 
-.sidebar-links li a {
+.sidebar-links a {
     width: 100%;
     color: var(--white);
     display: flex;
@@ -33,10 +33,10 @@
     font-size: 1.3rem;
 }
 
-.sidebar-links li.active {
+.sidebar-links a.active {
     background-color: #391588;
 }
 
-.sidebar-links li:first-child {
+.sidebar-links a:first-child {
     margin-bottom: 20px;
 }
